@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Make a Wish 🎂</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sacramento&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle, #9fcdaa, #c33764);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 10px;
+    color: #fff;
+    text-align: center;
+}
+
+/* 🌸 QUIZ WALLPAPER */
+#wallpaper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 1s ease;
+    font-size: 2em;
+    font-family: 'Sacramento', cursive;
+    color: white;
+}
+
+/* quiz buttons */
+#wallpaper button {
+    padding: 12px 25px;
+    margin: 8px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    background: rgba(255,255,255,0.3);
+    color: #fff;
+    transition: 0.3s;
+}
+
+#wallpaper button:hover {
+    background: rgba(255,255,255,0.6);
+    transform: scale(1.05);
+}
+
+/* popup */
+.popup {
+    position: absolute;
+    top: 20%;
+    background: rgba(255, 0, 80, 0.9);
+    padding: 15px 30px;
+    border-radius: 20px;
+    font-size: 1.4rem;
+    animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.emoji {
+    position: absolute;
+    font-size: 2rem;
+    animation: floatUp 2s ease forwards;
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-120px); }
+}
+
+/* 🎂 ORIGINAL PAGE (UNCHANGED) */
+.main-title {
+    color: #3e3535;
+    font-family: 'Great Vibes', cursive;
+    font-size: 8rem;
+    margin: 0;
+    transition: opacity 0.8s ease;
+}
+
+.subtitle {
+    font-family: 'Sacramento', cursive;
+    font-size: 3rem;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    color: #7a3008;
+    opacity: 0.9;
+}
+
+.box {
+    background: rgba(255,255,255,0.25);
+    padding: 40px;
+    border-radius: 35px;
+    box-shadow: 0 35px 70px rgba(0,0,0,0.5);
+    max-width: 700px;
+    width: 85%;
+    position: relative;
+    backdrop-filter: blur(10px);
+    margin-top: 60px;
+    transform: scale(1.25);
+    transform-origin: center;
+    transition: transform 1.2s ease-in-out;
+}
+
+.box.shrink { transform: scale(1.05); }
+
+.cake { font-size: 10rem; margin: 20px 0; position: relative; transition: opacity 0.6s ease; }
+.cake.fade-out { opacity: 0; }
+
+.candles { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); display: flex; }
+
+.flame { font-size: 3rem; animation: flicker 0.7s infinite alternate; }
+
+@keyframes flicker {
+    0% { transform: scale(1) rotate(-3deg); }
+    100% { transform: scale(1.3) rotate(3deg); }
+}
+
+.smoke {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 6rem;
+    opacity: 0;
+    animation: smokeUp 4s ease forwards;
+}
+
+@keyframes smokeUp {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-200px); }
+}
+
+.slice { font-size: 8rem; display: none; animation: slicePop 0.6s ease forwards; }
+
+@keyframes slicePop {
+    0% { transform: scale(0.5); opacity: 0; }
+    70% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); }
+}
+
+#wish { display: none; font-size: 1.5rem; margin-top: 20px; }
+
+button {
+    padding: 16px 45px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    margin: 15px;
+    transition: 0.3s ease;
+}
+
+button:hover { transform: scale(1.1); }
+
+#memoriesBtn { display: none; }
+
+.sparkle {
+    position: absolute;
+    font-size: 2.5rem;
+    animation: sparkle 2s ease forwards;
+    pointer-events: none;
+}
+
+@keyframes sparkle {
+    0% { opacity: 0; transform: scale(0.6); }
+    30% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-80px) scale(2); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌸 QUIZ -->
+<div id="wallpaper">
+    <div style="text-align:center;">
+        <h2>Final Question 😏</h2>
+        <p style="font-size:5rem;">“What are you best at.....?” 😄</p>
+
+        <div>
+            <button onclick="checkAnswer('a')">slleeping...😴😴</button>
+            <button onclick="checkAnswer('b')">Making me Happy ...🥰🥰</button>
+            <button onclick="checkAnswer('c')">Nothing...💩</button>
+            <button onclick="checkAnswer('d')">Other 😏😏</button>
+            <button onclick="checkAnswer('e')">Irritating me ..😒😒</button>
+        </div>
+    </div>
+</div>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic">
+    <source src="song/3.mp3" type="audio/mpeg">
+</audio>
+
+<h1 class="main-title" id="title">Make a Wish .... mieee 😘 </h1>
+<p class="subtitle">Close your eyes, smile, and blow the candle ✨</p>
+
+<div class="box" id="box">
+    <div class="cake" id="cake">
+        🎂
+        <div class="candles" id="candles">
+            <span class="flame">🔥</span>
+            <span class="flame">🔥</span>
+            <span class="flame">🔥</span>
+        </div>
+    </div>
+
+    <div class="slice" id="slice">🍰🍰</div>
+
+    <button id="blowBtn" onclick="blow()"> 🗡️ Blow Candle</button>
+
+    <div id="wish">
+        ✨ Your wishes is on their way coming soon .........  
+        <br> I love you miee sweetu potato 😘🫀🙈😘🫂
+    </div>
+
+    <button id="memoriesBtn" onclick="goNext()">💖 Letter</button>
+</div>
+
+<script>
+
+const music = document.getElementById("bgMusic");
+
+/* 🎯 CORRECT */
+let correctAnswer = "b";
+
+/* 💬 RESPONSES (FIXED) */
+const optionMessages = {
+    a: "Confidence toh full hai 😏 but wrong!",
+    b: "Haan haan thk hh 😂",
+    c: "No one? rude 😂",
+    d: "Ho to tum neech hiiii... 😏",
+    e: "Hmm 🤔 thoda close but no!"
+};
+
+/* CHECK */
+function checkAnswer(choice) {
+    if (choice === correctAnswer) {
+        showCorrect();
+    } else {
+        showWrong(choice);
+    }
+}
+
+/* ❌ WRONG */
+function showWrong(choice) {
+    const wallpaper = document.getElementById("wallpaper");
+
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.innerText = optionMessages[choice];
+
+    wallpaper.appendChild(popup);
+
+    const emoji = document.createElement("div");
+    emoji.className = "emoji";
+    emoji.innerText = "😂";
+    emoji.style.left = Math.random()*80 + "%";
+
+    wallpaper.appendChild(emoji);
+
+    setTimeout(() => {
+        popup.remove();
+        emoji.remove();
+    }, 2000);
+}
+
+/* ✅ CORRECT MESSAGE */
+function showCorrect() {
+    const wallpaper = document.getElementById("wallpaper");
+
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.style.background = "rgba(0,200,100,0.9)";
+    popup.innerText = "Areee finally 😌 sahi jawab 💖";
+
+    wallpaper.appendChild(popup);
+
+    setTimeout(() => {
+        unlock();
+    }, 1200);
+}
+
+/* 🔓 UNLOCK */
+function unlock() {
+    const wallpaper = document.getElementById("wallpaper");
+
+    music.volume = 0.6;
+    music.play();
+
+    wallpaper.style.opacity = "0";
+
+    setTimeout(() => {
+        wallpaper.style.display = "none";
+    }, 1000);
+}
+
+/* 🔁 LOOP */
+music.addEventListener("ended", function () {
+    setTimeout(() => {
+        music.currentTime = 0;
+        music.play();
+    }, 2000);
+});
+
+/* 🎂 CAKE LOGIC (UNCHANGED) */
+function blow() {
+
+    const candles = document.getElementById("candles");
+    const cake = document.getElementById("cake");
+    const wish = document.getElementById("wish");
+    const memBtn = document.getElementById("memoriesBtn");
+    const box = document.getElementById("box");
+    const title = document.getElementById("title");
+    const slice = document.getElementById("slice");
+
+    document.querySelector(".subtitle").style.display = "none";
+    document.getElementById("blowBtn").style.display = "none";
+
+    for (let i = 0; i < 30; i++) {
+        const s = document.createElement("div");
+        s.className = "sparkle";
+        s.innerText = ["✨","💫","⭐"][Math.floor(Math.random()*3)];
+        s.style.left = 20 + Math.random() * 60 + "%";
+        s.style.top = "35%";
+        cake.appendChild(s);
+        setTimeout(() => s.remove(), 2000);
+    }
+
+    setTimeout(() => {
+        candles.remove();
+        const smoke = document.createElement("div");
+        smoke.className = "smoke";
+        smoke.innerText = "💨💨💨";
+        cake.appendChild(smoke);
+    }, 600);
+
+    setTimeout(() => {
+        cake.classList.add("fade-out");
+        title.style.opacity = "0";
+        box.classList.add("shrink");
+
+        setTimeout(() => {
+            cake.style.display = "none";
+            slice.style.display = "block";
+        }, 500);
+
+    }, 1800);
+
+    setTimeout(() => {
+        wish.style.display = "block";
+        memBtn.style.display = "inline-block";
+    }, 2400);
+}
+
+function goNext() {
+    window.location.href = "slide4.html";
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memories 💖</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #1a0f1f, #0a0a12);
+    color: #fff;
+    padding: 40px 20px;
+    overflow-x: hidden;
+    animation: fadeIn 1.5s ease;
+}
+
+/* 🔥 HIDE EVERYTHING INITIALLY */
+body > *:not(#wallpaper){
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.2s ease;
+}
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* 🌸 FAKE WALLPAPER */
+#wallpaper{
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.4rem;
+    color: #fff;
+    z-index: 9999;
+    cursor: pointer;
+    transition: opacity 1s ease;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 60px;
+    font-size: 2.8em;
+    letter-spacing: 2px;
+    transition: 0.4s;
+}
+h1:hover{
+    text-shadow: 0 0 25px rgba(255,150,200,0.8);
+    transform: scale(1.05);
+}
+
+.section {margin-bottom: 90px;text-align: center;}
+
+.big-img {
+    width: 85%;
+    max-width: 700px;
+    border-radius: 22px;
+    box-shadow: 0 22px 45px rgba(0,0,0,0.65);
+    animation: floatImg 6s ease-in-out infinite;
+}
+
+@keyframes floatImg{
+    0%{transform:translateY(0px);}
+    50%{transform:translateY(-12px);}
+    100%{transform:translateY(0px);}
+}
+
+.polaroids {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 45px;
+    max-width: 1100px;
+    margin: auto;
+}
+
+.polaroid {
+    background: #fff;
+    color: #000;
+    padding: 16px 16px 30px;
+    border-radius: 14px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.55);
+    transform: rotate(var(--r));
+}
+
+.polaroid img {width: 100%;border-radius: 10px;}
+
+video {
+    width: 150%;
+    max-width: 1000px;
+    height: 860px;
+    object-fit: cover;
+    border-radius: 20px;
+    display: block;
+    margin: 20px auto;
+    background: #000;
+}
+
+#video2 {
+    margin-top: 40px;
+}
+
+.two-img {
+    display:flex;
+    gap:50px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.two-img img {
+    width:320px;
+    border-radius:20px;
+}
+
+.note{
+    max-width:920px;
+    margin: 70px auto 25px;
+    padding: 20px 34px;
+    border-radius: 18px;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌸 Fake Wallpaper -->
+<div id="wallpaper" onclick="startMusic()">
+    Welocme miee Cutupieee  💖
+
+    Sorry for this much distraction but i really try very tgo hard to do this but this is not working properly i dont whyyyyyyyyy 🥺🥺🥺🥺🥺🥺🥺
+</div>
+
+<!-- 🎵 Background Music -->
+<audio id="bgMusic">
+    <source src="song/6.mp3" type="audio/mpeg">
+</audio>
+
+<h1>💖 Some Moments, Forever</h1>
+
+<div class="section">
+    <img id="mainImg" src="image/5bb.jpg" class="big-img">
+    <div class="quote">Some moments deserve to be felt ✨</div>
+</div>
+
+<div class="section">
+    <div class="polaroids">
+        <div class="polaroid"><img id="img1" src="image/5aa.jpg"></div>
+        <div class="polaroid"><img id="img2" src="image/5ff.jpg"></div>
+        <div class="polaroid"><img id="img3" src="image/5mm.jpg"></div>
+    </div>
+</div>
+
+<div class="section">
+    <video id="video1" muted autoplay playsinline></video>
+    <div class="quote">Some memories move with time 🎶</div>
+</div>
+
+<div class="section">
+    <div class="polaroids">
+        <div class="polaroid"><img id="img4" src="image/5dd.jpg"></div>
+        <div class="polaroid"><img id="img5" src="image/5gg.jpg"></div>
+        <div class="polaroid"><img id="img6" src="image/5hh.jpg"></div>
+    </div>
+</div>
+
+<div class="section">
+    <video id="video2" muted autoplay playsinline></video>
+</div>
+
+<div class="section">
+    <div class="two-img">
+        <img id="img7" src="image/5vv.jpg">
+        <img id="img8" src="image/5ww.jpg">
+    </div>
+</div>
+
+<div class="note">
+✨ A little corner of our smiles, laughter, and moments that quietly make our heart happy 🌸
+</div>
+
+<script>
+function startMusic(){
+    const music = document.getElementById("bgMusic");
+    const wallpaper = document.getElementById("wallpaper");
+
+    music.play();
+
+    const content = document.querySelectorAll("body > *:not(#wallpaper)");
+    content.forEach(el => {
+        el.style.visibility = "visible";
+        el.style.opacity = "1";
+    });
+
+    wallpaper.style.opacity = "0";
+
+    setTimeout(()=>{
+        wallpaper.style.display = "none";
+    },1000);
+}
+
+/* IMAGE LOOP */
+const sets = [
+["image/5ab.jpg","image/5bc.jpg","image/5cd.jpg","image/5ll.jpg","image/5qq.jpg"],
+["image/5zz.jpg","image/5.jpg","image/5y.jpg","image/5u.jpg","image/5ss.jpg"],
+["image/5z.jpg","image/5yy.jpg","image/5rr.jpg","image/5s.jpg","image/5x.jpg"],
+["image/5ii.jpg","image/5nn.jpg","image/5oo.jpg","image/5pp.jpg","image/503.jpg"],
+["image/5fg.jpg","image/5t.jpg","image/5v.jpg","image/500.jpg","image/502.jpg"],
+["image/5de.jpg","image/5ef.jpg","image/501.jpg","image/5r.jpg","image/5w.jpg"]
+];
+
+const elements = [
+document.getElementById("img1"),
+document.getElementById("img2"),
+document.getElementById("img3"),
+document.getElementById("img4"),
+document.getElementById("img5"),
+document.getElementById("img6")
+];
+
+let i = 0;
+
+setInterval(()=>{
+    i = (i + 1) % 5;
+    elements.forEach((el,index)=>{
+        el.src = sets[index][i];
+    });
+},3000);
+
+/* VIDEO SETS */
+const videos1 = [
+"image/5a.mp4","image/5b.mp4","image/5k.mp4","image/5d.mp4",
+"image/5n.mp4","image/5g.mp4","image/5i.mp4","image/5f.mp4"
+];
+
+const videos2 = [
+"image/5h.mp4","image/5j.mp4","image/5l.mp4","image/5m.mp4",
+"image/5e.mp4","image/5c.mp4","image/5o.mp4","image/5p.mp4"
+];
+
+const videoEl1 = document.getElementById("video1");
+const videoEl2 = document.getElementById("video2");
+
+videoEl1.src = videos1[0];
+videoEl2.src = videos2[0];
+
+videoEl1.play();
+videoEl2.play();
+
+function changeVideo(videoEl, videoList, indexObj){
+    videoEl.style.opacity = "0";
+
+    setTimeout(()=>{
+        indexObj.value = (indexObj.value + 1) % videoList.length;
+        videoEl.src = videoList[indexObj.value];
+        videoEl.play();
+        videoEl.style.opacity = "1";
+    },600);
+}
+
+let obj1 = {value:0};
+let obj2 = {value:0};
+
+videoEl1.addEventListener("ended", ()=>{
+    changeVideo(videoEl1, videos1, obj1);
+});
+
+videoEl2.addEventListener("ended", ()=>{
+    changeVideo(videoEl2, videos2, obj2);
+});
+</script>
+
+</body>
+</html>  

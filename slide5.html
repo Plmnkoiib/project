@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cinematic Live Collage ✨</title>
+
+<!-- 💖 FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:radial-gradient(circle at top,#2a0f1f,#0b0509);
+    overflow-y:auto;
+}
+
+/* 🌸 QUIZ WALLPAPER */
+#wallpaper{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:3000;
+    transition:opacity 1s ease;
+    text-align:center;
+    font-family:'Dancing Script', cursive;
+    color:#fff;
+}
+
+/* quiz buttons */
+#wallpaper button{
+    padding:12px 25px;
+    margin:8px;
+    border-radius:12px;
+    border:none;
+    font-size:1.3rem;
+    cursor:pointer;
+    background:rgba(255,255,255,0.3);
+    color:#fff;
+    transition:0.3s;
+}
+
+#wallpaper button:hover{
+    background:rgba(255,255,255,0.6);
+    transform:scale(1.05);
+}
+
+/* popup */
+.popup{
+    position:absolute;
+    top:20%;
+    background:rgba(255, 0, 80, 0.9);
+    padding:15px 30px;
+    border-radius:20px;
+    font-size:1.5rem;
+    animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(0);opacity:0;}
+    100%{transform:scale(1);opacity:1;}
+}
+
+.emoji{
+    position:absolute;
+    font-size:2rem;
+    animation:floatUp 2s ease forwards;
+}
+
+@keyframes floatUp{
+    0%{opacity:1;transform:translateY(0);}
+    100%{opacity:0;transform:translateY(-120px);}
+}
+
+/* 🎞 Film grain */
+body::after{
+    content:"";
+    position:fixed;
+    inset:0;
+    background:url("https://i.imgur.com/8bKQ8tE.png");
+    opacity:.06;
+    pointer-events:none;
+}
+
+/* 🌌 Grid */
+.collage{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    grid-auto-rows:420px;
+    gap:22px;
+    padding:40px;
+    grid-auto-flow:dense;
+}
+
+/* 🖼 Card */
+.card{
+    position:relative;
+    overflow:hidden;
+    border-radius:22px;
+    box-shadow:0 25px 60px rgba(0,0,0,.65);
+}
+
+.card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform-origin:center;
+    transition:opacity 1.6s ease;
+}
+
+h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 4em;
+}
+
+p {
+    font-family: 'Pacifico', cursive;
+    font-size: 4em;
+    line-height: 4;
+    min-height: 30px;
+}
+
+
+/* 🎥 Motion */
+.zoom-in img{ animation:zoomIn 18s ease-in-out infinite; }
+.zoom-out img{ animation:zoomOut 20s ease-in-out infinite; }
+.breathe img{ animation:breathe 22s ease-in-out infinite; }
+.push img{ animation:push 16s ease-in-out infinite; }
+.drift img{ animation:drift 26s ease-in-out infinite; }
+
+/* overlay */
+.card::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(0,0,0,.5));
+}
+
+.big{grid-column:span 2;grid-row:span 2;}
+.tall{grid-row:span 2;}
+.wide{grid-column:span 2;}
+
+/* animations */
+@keyframes zoomIn{
+    0%{transform:scale(0.9)}
+    50%{transform:scale(1.1)}
+    100%{transform:scale(0.9)}
+}
+@keyframes zoomOut{
+    0%{transform:scale(1.15)}
+    50%{transform:scale(0.95)}
+    100%{transform:scale(1.15)}
+}
+@keyframes breathe{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.06)}
+}
+@keyframes push{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.12) translateY(-6px)}
+    100%{transform:scale(1)}
+}
+@keyframes drift{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.05) translateX(8px)}
+    100%{transform:scale(1)}
+}
+
+/* title with font */
+.title{
+    text-align:center;
+    color:#fff;
+    font-size:30px;
+    font-family:'Dancing Script', cursive;
+    letter-spacing:2px;
+    text-shadow:0 0 22px rgba(255,180,220,.6);
+    padding:40px 0 60px 0;
+}
+
+button {
+    padding: 16px 45px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    color: #000;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    display: block;
+    margin: 20px auto 60px auto;
+    transition: 0.3s ease;
+}
+
+button:hover { transform: scale(1.1); }
+</style>
+</head>
+
+<body>
+
+<!-- 🌸 QUIZ -->
+<div id="wallpaper">
+    <div>
+        <h2 style="font-size:2.8rem;"> Last but not the least..... 😏💖</h2>
+        <p style="font-size:2rem;"> When I say “I'm fine... What you should do …</p>
+
+        <div>
+            <button onclick="checkAnswer('a')">Make it worse somehow 🥺</button>
+            <button onclick="checkAnswer('b')">Panic start 😒😒</button>
+            <button onclick="checkAnswer('c')">Try to fix things 😤😡</button>
+            <button onclick="checkAnswer('d')">Still deciding 🤔</button>
+            <button onclick="checkAnswer('e')">Believe it (big mistake 💀)</button>
+        </div>
+    </div>
+</div>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic">
+    <source src="song/5.mp3" type="audio/mpeg">
+</audio>
+
+<div class="collage">
+    <!-- SAME YOUR ORIGINAL GRID -->
+    <div class="card big zoom-in"></div>
+    <div class="card breathe"></div>
+    <div class="card tall drift"></div>
+    <div class="card zoom-out"></div>
+    <div class="card wide push"></div>
+    <div class="card drift"></div>
+    <div class="card breathe"></div>
+
+    <div class="card zoom-in"></div>
+    <div class="card drift"></div>
+    <div class="card breathe"></div>
+    <div class="card zoom-out"></div>
+    <div class="card push"></div>
+    <div class="card drift"></div>
+    <div class="card breathe"></div>
+    <div class="card zoom-in"></div>
+    <div class="card wide push"></div>
+    <div class="card tall drift"></div>
+
+    <div class="card zoom-in"></div>
+    <div class="card drift"></div>
+    <div class="card breathe"></div>
+    <div class="card push"></div>
+    <div class="card zoom-out"></div>
+    <div class="card drift"></div>
+    <div class="card breathe"></div>
+    <div class="card zoom-in"></div>
+</div>
+
+<div class="title">Memories that never stay still 🤍</div>
+
+<button onclick="goNext()">Miee love</button>
+
+<script>
+const music = document.getElementById("bgMusic");
+
+/* correct */
+let correctAnswer = "a";
+
+/* messages */
+const optionMessages = {
+    a:"As usaul you do that same !🤨",
+    b:" mazaak mt kroo yrr 😒",
+    c:"HA HAAHA HAAHAA HAAA  never in your thoughts  😂",
+    d:"Still deciding? 😏 jaldi karo",
+    e:"Awww 💖 perfect answer!"
+};
+
+function checkAnswer(choice){
+    if(choice===correctAnswer){
+        showCorrect();
+    }else{
+        showWrong(choice);
+    }
+}
+
+function showWrong(choice){
+    const wallpaper=document.getElementById("wallpaper");
+
+    const popup=document.createElement("div");
+    popup.className="popup";
+    popup.innerText=optionMessages[choice];
+
+    wallpaper.appendChild(popup);
+
+    const emoji=document.createElement("div");
+    emoji.className="emoji";
+    emoji.innerText="😂";
+    emoji.style.left=Math.random()*80+"%";
+
+    wallpaper.appendChild(emoji);
+
+    setTimeout(()=>{
+        popup.remove();
+        emoji.remove();
+    },2000);
+}
+
+function showCorrect(){
+    const wallpaper=document.getElementById("wallpaper");
+
+    const popup=document.createElement("div");
+    popup.className="popup";
+    popup.style.background="rgba(0,200,100,0.9)";
+    popup.innerText="As usaul you do that same !🤨";
+
+    wallpaper.appendChild(popup);
+
+    setTimeout(()=>unlock(),1200);
+}
+
+function unlock(){
+    music.volume=0.6;
+    music.play();
+
+    const wallpaper=document.getElementById("wallpaper");
+    wallpaper.style.opacity="0";
+
+    setTimeout(()=>{
+        wallpaper.style.display="none";
+    },1000);
+}
+
+/* LOOP */
+music.addEventListener("ended", () => {
+    setTimeout(()=>{
+        music.currentTime=0;
+        music.play();
+    },2000);
+});
+</script>
+
+<script>
+const photos = [ /* SAME ARRAY */ 
+"image/6a.jpg","image/6-a.jpg","image/6b.jpg","image/6-b.jpg",
+"image/6c.jpg","image/6d.jpg","image/6-d.jpg","image/6e.jpg",
+"image/6f.jpg","image/6-f.jpg","image/6g.jpg","image/6h.jpg",
+"image/6-h.jpg","image/6i.jpg","image/6j.jpg","image/6k.jpg",
+"image/6-k.jpg","image/6l.jpg","image/6m.jpg","image/6n.jpg",
+"image/6o.jpg","image/6p.jpg","image/6-p.jpg","image/6q.jpg",
+"image/6-q.jpg","image/6r.jpg","image/6-s.jpg","image/6t.jpg",
+"image/6u.jpg","image/6v.jpg","image/6w.jpg","image/6x.jpg",
+"image/6-x.jpg","image/6y.jpg","image/6-y.jpg","image/6z.jpg",
+"image/6-l.jpg","image/6-j.jpg","image/6-i.jpg","image/6-u.jpg",
+"image/6-w.jpg","image/6-m.jpg","image/6-z.jpg"
+];
+
+function randomImage(){
+    return photos[Math.floor(Math.random()*photos.length)];
+}
+
+document.querySelectorAll('.card').forEach(card=>{
+    const img1=document.createElement('img');
+    const img2=document.createElement('img');
+
+    img1.src=randomImage();
+    img2.src=randomImage();
+    img2.style.opacity=0;
+
+    card.appendChild(img1);
+    card.appendChild(img2);
+
+    let showFirst=true;
+
+    setInterval(()=>{
+        if(showFirst){
+            img2.src=randomImage();
+            img2.style.opacity=1;
+            img1.style.opacity=0;
+        }else{
+            img1.src=randomImage();
+            img1.style.opacity=1;
+            img2.style.opacity=0;
+        }
+        showFirst=!showFirst;
+    },3000 + Math.random()*1000);
+});
+
+function goNext() {
+    window.location.href = "slide6.html";
+}
+</script>
+
+</body>
+</html>

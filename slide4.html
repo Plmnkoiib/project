@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Letter For You 🌸</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap" rel="stylesheet">
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:radial-gradient(circle,#3b1b2f,#160914);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+}
+
+/* 🌸 QUIZ WALLPAPER */
+#wallpaper{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:2000;
+    transition:opacity 1s ease;
+    font-family:'Segoe UI',sans-serif;
+    color:white;
+    text-align:center;
+    font-family: 'Dancing Script', cursive;
+
+}
+
+/* quiz buttons */
+#wallpaper button{
+    padding:12px 25px;
+    margin:8px;
+    border-radius:12px;
+    border:none;
+    font-size:1.2rem;
+    cursor:pointer;
+    background:rgba(255,255,255,0.3);
+    color:#fff;
+    transition:0.3s;
+}
+
+#wallpaper button:hover{
+    background:rgba(255,255,255,0.6);
+    transform:scale(1.05);
+}
+
+/* popup */
+.popup{
+    position:absolute;
+    top:20%;
+    background:rgba(255,0,80,0.9);
+    padding:15px 30px;
+    border-radius:20px;
+    font-size:1.4rem;
+    animation:pop 0.4s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(0);opacity:0;}
+    100%{transform:scale(1);opacity:1;}
+}
+
+.emoji{
+    position:absolute;
+    font-size:2rem;
+    animation:floatUp 2s ease forwards;
+}
+
+@keyframes floatUp{
+    0%{opacity:1;transform:translateY(0);}
+    100%{opacity:0;transform:translateY(-120px);}
+}
+
+/* 🌸 Falling petals */
+.petal{
+    position:fixed;
+    top:-15%;
+    font-size:34px;
+    animation:fall 5s linear infinite, glow 3s ease-in-out infinite;
+    opacity:0;
+    pointer-events:none;
+}
+@keyframes fall{
+    0%{transform:translateY(0);opacity:0}
+    15%{opacity:1}
+    100%{transform:translateY(120vh);opacity:0}
+}
+@keyframes glow{
+    0%,100%{filter:drop-shadow(0 0 6px rgba(255,180,210,.4))}
+    50%{filter:drop-shadow(0 0 18px rgba(255,200,230,.9))}
+}
+
+/* 📜 Paper */
+.paper{
+    width:820px;
+    min-height:720px;
+    background:linear-gradient(180deg,#ffe6ef,#ffd3e1);
+    border-radius:18px;
+    padding:48px;
+    position:relative;
+    box-shadow:0 30px 60px rgba(0,0,0,.6),
+               inset 0 0 30px rgba(255,255,255,.4);
+}
+
+/* ✍️ Text */
+.text{
+    width:52%;
+    color:#5a1f3d;
+    font-size:1.1rem;
+    line-height:1.9;
+    white-space:pre-line;
+}
+
+
+/* 📸 Polaroid */
+.polaroid{
+    position:absolute;
+    right:-190px;
+    top:70px;
+    height:550px;
+    width:580px;
+    background:#fff;
+    padding:14px 14px 50px;
+    box-shadow:0 14px 34px rgba(247, 5, 5, 0.4);
+    transform:rotate(-4deg);
+}
+.polaroid img{
+    width:100%;
+    height:490px;
+    object-fit:cover;
+    transition:opacity .5s ease;
+}
+.caption{
+    position:center;
+    left:0;
+    width:100%;
+    height:50px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:16px;
+    color:#5a1f3d;
+    font-weight:500;
+}
+
+/* 🦋 Butterflies */
+.butterfly{
+    position:absolute;
+    font-size:28px;
+    opacity:.9;
+    filter:drop-shadow(0 0 10px rgba(255,200,230,.6));
+    pointer-events:none;
+}
+.vert{ animation:floatY 7s ease-in-out infinite; }
+.hori{ animation:floatX 8s ease-in-out infinite; }
+
+@keyframes floatY{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-22px)}
+}
+@keyframes floatX{
+    0%,100%{transform:translateX(0)}
+    50%{transform:translateX(26px)}
+}
+
+/* button */
+.memories-btn{
+    position:absolute;
+    bottom:30px;
+    right:40px;
+    padding:12px 28px;
+    background:#5a1f3d;
+    color:#280404;
+    border:none;
+    border-radius:30px;
+    font-size:15px;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.4);
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌸 QUIZ -->
+<div id="wallpaper">
+    <div>
+        <h2> Pehle Jawab.... 😏💖</h2>
+        <p style="font-size:2rem;"> Whats in your mind...... Right now ...</p>
+
+        <div>
+            <button onclick="checkAnswer('a')"> Ki maai bahut axaa hu 😎</button>
+            <button onclick="checkAnswer('b')"> How lucky am I 😗😗 </button>
+            <button onclick="checkAnswer('c')"> Neend aari hain  😴</button>
+            <button onclick="checkAnswer('d')"> kaunse ache karamo kaa fal haain ye 🙈🙈🙈🫂</button>
+            <button onclick="checkAnswer('e')"> Nothing 😶 </button>
+        </div>
+    </div>
+</div>
+
+<audio id="bgMusic">
+    <source src="song/4.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const music=document.getElementById("bgMusic");
+
+/* correct */
+let correctAnswer="d";
+
+/* messages */
+const optionMessages={
+    a:" Confidence level 😏 but wrong!",
+    b:" Of Course you are  😂",
+    c:" Always sleeping huh 😴",
+    d:" Sach Bata 🙈🫀",
+    e:" Gawar ho kiyaa....???"
+};
+
+function checkAnswer(choice){
+    if(choice===correctAnswer){
+        showCorrect();
+    }else{
+        showWrong(choice);
+    }
+}
+
+function showWrong(choice){
+    const wallpaper=document.getElementById("wallpaper");
+
+    const popup=document.createElement("div");
+    popup.className="popup";
+    popup.innerText=optionMessages[choice];
+
+    wallpaper.appendChild(popup);
+
+    const emoji=document.createElement("div");
+    emoji.className="emoji";
+    emoji.innerText="😂";
+    emoji.style.left=Math.random()*80+"%";
+
+    wallpaper.appendChild(emoji);
+
+    setTimeout(()=>{
+        popup.remove();
+        emoji.remove();
+    },2000);
+}
+
+function showCorrect(){
+    const wallpaper=document.getElementById("wallpaper");
+
+    const popup=document.createElement("div");
+    popup.className="popup";
+    popup.style.background="rgba(0,200,100,0.9)";
+    popup.innerText=" Sach Bata 🙈🫀💖";
+
+    wallpaper.appendChild(popup);
+
+    setTimeout(()=>{ unlock(); },1200);
+}
+
+function unlock(){
+    music.volume=0.6;
+    music.play();
+
+    const wallpaper=document.getElementById("wallpaper");
+    wallpaper.style.opacity="0";
+
+    setTimeout(()=>{ wallpaper.style.display="none"; },1000);
+}
+
+music.addEventListener("ended",function(){
+    setTimeout(()=>{
+        music.currentTime=0;
+        music.play();
+    },2000);
+});
+</script>
+
+<script>
+const petals=["🌸","🌺","💮","😘","🫂","🥰","😍","🎉","🎊","🎈","🌹","🏵️","🌼","🌷","🍁","💐","🌻","🫀","🫂","😘","🥰"];
+for(let i=0;i<66;i++){
+    let p=document.createElement("div");
+    p.className="petal";
+    p.innerText=petals[Math.floor(Math.random()*petals.length)];
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDelay=Math.random()*6+"s";
+    document.body.appendChild(p);
+}
+</script>
+
+<div class="paper">
+    <div class="text" id="letter"></div>
+
+    <div class="polaroid">
+        <img id="polaroidImg">
+        <div class="caption"> As i enetrd in your life you....Surely you become better 100% in looks.... No dout🤣😅😂😘🥰🫂🫀</div>
+    </div>
+
+    <button class="memories-btn" onclick="goNext()">Memories</button>
+</div>
+
+<script>
+const message=`
+“You are not just a person to me, you are my whole world. Every moment I spend with you lives in the most beautiful corner of my heart. I don’t just love you, I truly value you, respect you, and see you as the most precious part of my life. Your smile is my happiness, your voice is my peace, and your presence is my strength. With you, everything feels right, and without you, everything feels incomplete. From the bottom of my heart, I want to be with you always, holding your hand through every joy and every challenge… because you are the most special to me, my forever.” 💕✨
+
+Every word here is written slowly,
+with patience, emotion, and love.
+
+Some people become memories.
+Some become moments.
+And you quietly become miee forever.
+
+To you miee love mieee puchu..😘🫂🫀
+`;
+
+let i=0;
+const t=document.getElementById("letter");
+(function type(){
+    if(i<message.length){
+        t.innerHTML+=message.charAt(i++);
+        setTimeout(type,40);
+    }
+})();
+
+const images=[
+"image/2(a).jpg",
+"image/2(b).jpg",
+"image/2(c).jpg",
+"image/2(d).jpg",
+"image/2(e).jpg"
+];
+
+let index=0;
+const polaroidImg=document.getElementById("polaroidImg");
+polaroidImg.src=images[index];
+
+setInterval(()=>{
+    polaroidImg.style.opacity=0;
+    setTimeout(()=>{
+        index=(index+1)%images.length;
+        polaroidImg.src=images[index];
+        polaroidImg.style.opacity=1;
+    },300);
+},2000);
+
+function goNext(){
+    window.location.href="slide5.html";
+}
+</script>
+
+</body>
+</html>

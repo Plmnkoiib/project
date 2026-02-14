@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You 💌</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #e654bd, #6799f0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #a10404;
+    text-align: center;
+}
+
+/* 💌 MAIN PAGE */
+.letter-box {
+    background: linear-gradient(135deg, #95e996, #ecf5d5);
+    padding: 80px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 1100px;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.35);
+}
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3em;
+}
+
+h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3em;
+}
+
+p {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.6em;
+    line-height: 2;
+    min-height: 300px;
+}
+
+button {
+    margin-top: 30px;
+    padding: 16px 40px;
+    font-size: 1.3em;
+    border: none;
+    border-radius: 15px;
+    background: #f77b85;
+    color: rgb(33, 15, 240);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.08);
+}
+
+/* 🌸 QUIZ WALLPAPER */
+#wallpaper {
+    position: fixed;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1000;
+    transition: opacity 1s ease;
+    font-family: 'Dancing Script', cursive;
+    color: white;
+}
+
+/* Gradient Heading */
+.gradient-text {
+    background: linear-gradient(45deg, #38040e, #c40c0c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.question {
+    font-size: 3em;
+    margin: 15px 0;
+    margin-bottom: 5px;
+}
+
+/* Options */
+.options button {
+    margin: 18px;
+    padding: 12px 25px;
+    border-radius: 15px;
+    border: none;
+    margin-top: 0;
+    font-size: 1.1em;
+    cursor: pointer;
+    background: rgba(11, 11, 11, 0.25);
+    color: white;
+    transition: 0.3s;
+}
+
+.options button:hover {
+    background: rgba(75, 21, 21, 0.5);
+    transform: scale(1.05);
+}
+
+/* ❌ Popup */
+.popup {
+    position: absolute;
+    top: 20%;
+    background: rgba(255, 0, 80, 0.9);
+    padding: 20px 40px;
+    border-radius: 20px;
+    font-size: 1.5em;
+    animation: pop 0.4s ease;
+}
+
+@keyframes pop {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* emoji */
+.emoji {
+    position: absolute;
+    font-size: 2em;
+    animation: floatUp 2s ease forwards;
+}
+
+@keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-120px); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🌸 QUIZ WALLPAPER -->
+<div id="wallpaper">
+    <h2 class="gradient-text">Answer this to unlock 💖</h2>
+
+    <p class="question"> Who is Theee Luckiest...???</p>
+
+    <div class="options">
+        <button onclick="checkAnswer('a')">Of course me ..</button>
+        <button onclick="checkAnswer('b')">Meee</button>
+        <button onclick="checkAnswer('c')"> Maai to ek suar hu 😏</button>
+        <button onclick="checkAnswer('d')"> May be she </button>
+        <button onclick="checkAnswer('e')"> i am very to lucky to have the prettiest girl on the earth 🥰😘🙈</button>
+    </div>
+</div>
+
+<!-- 🎵 MUSIC -->
+<audio id="bgMusic">
+    <source src="song/2.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 💌 MAIN PAGE -->
+<div class="letter-box">
+    <h1>💌 A Letter for You</h1>
+    <p id="text"></p>
+
+    <button onclick="goNext()">🎂 Cut the Cake</button>
+</div>
+
+<script>
+
+/* 💌 TYPEWRITER */
+const message = `On your birthday, I just want to say,
+You make my world brighter in every way.
+Your smile lights up my darkest night,
+With you, everything feels so right.
+
+You’re not just special, you’re my heart’s song,
+With you is where I truly belong.
+In every laugh, in every cheer,
+I’m thankful to have you near.
+
+May your day be filled with love and cheer,
+And all your dreams come true this year.
+But more than that, I want you to see,
+You mean the whole world to me. 💕✨
+
+
+
+You are my love on my brightest days, my forever Valentine in countless ways.`;
+
+
+let i = 0;
+function typeWriter() {
+    if (i < message.length) {
+        document.getElementById("text").innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeWriter, 40);
+    }
+}
+typeWriter();
+
+/* 🎵 MUSIC */
+const music = document.getElementById("bgMusic");
+
+/* 🧠 RANDOM CORRECT */
+let correctAnswer = Math.random() < 0.5 ? "c" : "e";
+
+/* 💬 OPTION BASED MESSAGES */
+const optionMessages = {
+    a: "Itna confidence 😏 but not correct!",
+    b: "Meee?? 😂 thoda zyada ho gaya!",
+    c: "Self respect kaha hai 😭",
+    d: "She? 🤨 interesting choice!",
+    e: "Awwww 💖 ab sahi bola tumne!"
+};
+
+/* 🎯 CHECK */
+function checkAnswer(choice) {
+    if (choice === correctAnswer) {
+        unlock();
+    } else {
+        showWrong(choice);
+    }
+}
+
+/* ❌ WRONG */
+function showWrong(choice) {
+    const wallpaper = document.getElementById("wallpaper");
+
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.innerText = optionMessages[choice];
+
+    wallpaper.appendChild(popup);
+
+    const emoji = document.createElement("div");
+    emoji.className = "emoji";
+    emoji.innerText = "💔";
+    emoji.style.left = Math.random()*80 + "%";
+
+    wallpaper.appendChild(emoji);
+
+    setTimeout(() => {
+        popup.remove();
+        emoji.remove();
+    }, 2000);
+}
+
+/* ✅ UNLOCK */
+function unlock() {
+    const wallpaper = document.getElementById("wallpaper");
+
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.style.background = "rgba(0,200,100,0.9)";
+    popup.innerText = "Unlocked 💖";
+
+    wallpaper.appendChild(popup);
+
+    music.volume = 0.6;
+    music.play();
+
+    setTimeout(() => {
+        wallpaper.style.opacity = "0";
+        setTimeout(() => {
+            wallpaper.style.display = "none";
+        }, 1000);
+    }, 800);
+}
+
+/* 🔁 LOOP */
+music.addEventListener("ended", function () {
+    setTimeout(() => {
+        music.currentTime = 0;
+        music.play();
+    }, 2000);
+});
+
+/* ➡️ NEXT */
+function goNext() {
+    window.location.href = "slide3.html";
+}
+
+</script>
+
+</body>
+</html>

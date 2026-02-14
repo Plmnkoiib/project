@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday 🎉</title>
+
+<link href="https://fonts.cdnfonts.com/css/brittany-signature" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+
+<style>
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    margin: 0;
+    background: linear-gradient(135deg, #db030a, #fad0c4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+}
+
+/* 🎬 Intro Screen */
+#intro {
+    font-size: 15ex;
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    z-index: 1000;
+    animation: pulse 2s infinite;
+    text-align: center;
+    font-family:'Brittany Signature', cursive;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.85; }
+    100% { opacity: 1; }
+}
+
+/* 🎂 Card */
+.card {
+    width: 780px;
+    max-width: 100vw;
+    min-height: 660px;
+    padding: 0px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #e8e5e5, #d94218);
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.18),
+        inset 0 1px 0 rgba(255,255,255,0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.hidden {
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+}
+
+/* 🖼 Image */
+.photo-frame {
+    padding: 20px;
+    width: 90%;
+    height: 700px;
+    border-radius: 58px;
+    overflow: hidden;
+}
+
+.photo-frame img {
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    object-fit: center;
+}
+
+/* ✍️ Text */
+.card-caption {
+    margin-top: -60px;
+    text-align: center;
+    font-family:'Brittany Signature', cursive;
+}
+
+.caption-title {
+    font-size: 7em;
+    letter-spacing: 2px;
+    color: #222;
+}
+
+.caption-quote {
+    font-family: 'Allura', cursive;
+    font-size: 3em;
+    opacity: 0.8;
+}
+
+/* 🎁 Button */
+.next-btn {
+    margin-top: auto;
+    padding: 14px 35px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+}
+
+.next-btn:hover {
+    transform: scale(1.08);
+}
+
+/* 🎉 Confetti */
+.confetti {
+    position: absolute;
+    top: 10px;
+    font-size: 35px;
+    animation: fall linear infinite;
+    pointer-events: none;
+}
+
+@keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+}
+
+/* 🌷 Bouquet */
+.tulip {
+    position: absolute;
+    bottom: -50px;
+    left: -280px;
+    font-size: 300px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎬 Intro -->
+<div id="intro">
+    <h2>✨ Hello ✨</h2>
+    <p> Mieeeeeeeeeeee.... birthday boiiiii....</p>
+</div>
+
+<!-- 🎵 Music -->
+<audio id="bgMusic">
+    <source src="song/1.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🎂 Card -->
+<div class="card hidden" id="birthdayCard">
+
+    <div class="tulip">💐</div>
+
+    <div class="photo-frame">
+    <img src="image/1st.jpg" alt="Our Memory">
+</div>
+
+    <div class="card-caption">
+        <div class="caption-title">Happy Birthday</div>
+        <div class="caption-quote"> Mieeeeeeee puchu......😘😘 </div>
+    </div>
+
+    <button class="next-btn" onclick="goToSlide2()">
+        🎁 Surprise
+    </button>
+
+</div>
+
+<script>
+/* 🎉 Confetti */
+const emojis = ["🎉","🎊","🎈","✨","🎂","💖"];
+for (let i = 0; i < 35; i++) createConfetti();
+
+function createConfetti() {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    c.style.left = Math.random() * 100 + "vw";
+    c.style.animationDuration = (3 + Math.random() * 5) + "s";
+    document.body.appendChild(c);
+    setTimeout(() => { c.remove(); createConfetti(); }, 8000);
+}
+
+/* 🎵 Music Loop System */
+const intro = document.getElementById("intro");
+const card = document.getElementById("birthdayCard");
+const music = document.getElementById("bgMusic");
+
+/* Intro Click */
+intro.addEventListener("click", () => {
+    music.volume = 0.6;
+    music.play();
+
+    intro.style.opacity = "0";
+    setTimeout(() => {
+        intro.style.display = "none";
+        card.classList.remove("hidden");
+    }, 600);
+});
+
+/* 🔁 2-Second Delayed Loop */
+music.addEventListener("ended", function () {
+    setTimeout(() => {
+        music.currentTime = 0;
+        music.play();
+    }, 2000);
+});
+
+/* Slide Navigation */
+function goToSlide2() {
+    window.location.href = "slide2.html";
+}
+
+
+</script>
+
+</body>
+</html>
